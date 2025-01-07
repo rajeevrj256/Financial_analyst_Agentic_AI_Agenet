@@ -1,21 +1,17 @@
 from phi.agent import Agent
-from phi.model.groq import Groq
+from phi.model.google import Gemini
 from phi.tools.yfinance import YFinanceTools
 from phi.tools.duckduckgo import DuckDuckGo
 from phi.playground import Playground, serve_playground_app
-import os
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+
 
 # Initialize the Groq model
-groq_model = Groq(id="llama-3.2-11b-vision-preview")
-
+model=Gemini(id='gemini-1.5-flash-exp-0827', params=None, client=None)
 # Define the Finance Agent using YFinanceTools
 finance_agent = Agent(
     name="Finance AI Agent",
-    model=groq_model,
+    model=model,
     tools=[
         YFinanceTools(
             stock_price=True,
@@ -34,7 +30,7 @@ finance_agent = Agent(
 web_search_agent = Agent(
     name='Web Search Agent',
     role="Search the web for information",
-    model=groq_model,
+    model=model,
     tools=[DuckDuckGo()],
     instructions=["Always include source"],
     show_tools_calls=True,
@@ -44,7 +40,7 @@ web_search_agent = Agent(
 # Multi-agent setup: Combine finance and web search agents
 multi_ai_agent = Agent(
     team=[web_search_agent, finance_agent],
-    model=groq_model,
+    model=model,
     instructions=["Always include source and link", "Use tables to display the data"],
     show_tool_calls=True,
     markdown=True

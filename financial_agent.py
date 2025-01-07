@@ -7,7 +7,7 @@ from phi.model.google import Gemini
 
 
 # Initialize the model
-model=Gemini(id='gemini-1.5-flash-exp-0827', params=None, client=None)  # Correct
+model=Gemini(id='gemini-1.5-flash-exp-0827', params=None, client=None)  
 
 
 # Define the Finance Agent using YFinanceTools
